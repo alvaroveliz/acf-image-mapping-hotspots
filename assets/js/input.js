@@ -17,11 +17,9 @@
 		// this field's `img`
 		$fieldImg = $field.find('.image_mapping-image img'),
 
-		// this field's marker
-		$fieldMarker = $field.find('.image_mapping-image span'),
-
 		// this field's `input`
-		$fieldInput = $field.find('input.image_mapping-input'),
+		$fieldInputs = $field.find('.image_mapping-inputs'),
+		$fieldInput = $field.find('input.image_mapping-input_coords'),
 
 		// the label for the img to link to
 		imgSelector = '[data-name="' + $fieldImg.attr('data-label') + '"]',
@@ -60,6 +58,7 @@
 
 			$fieldInput.on( 'change input', handleInputChange );
 
+			$field.find('.acf-input').on('click', '.image_mapping-remove-row', handleRemoveRow );
 		},
 
 		setImgDimensions = function() {
@@ -124,11 +123,50 @@
 			}
 
 			// move the marker
-			moveMarker( x, y );
+			//moveMarker( x, y );
+			addMarker(x, y);
 
-			// update the value
-			$fieldInput.val( x + ',' + y );
+			// add the input value
+			//$fieldInput.val( x + ',' + y );
+			addInputValue(x, y);
+		},
 
+		addMarker = function(x, y) {
+			$marker = `<span style="left:${x};top:${y}"></span>`;
+
+			$imageField = $field.find('.image_mapping-image').append($marker);
+		},
+
+		addInputValue = function(x, y) {
+			field_name = $fieldInputs.data('field-name');
+			index = $field.find('.image_mapping-inputs tr').length;
+			
+			$fieldInput = `
+			<tr class="acf-field">
+				<td class="acf-label image_mapping-input">
+				    <input class="image_mapping-input_coords" type="hidden" name="${field_name}[${index}][coords]" value="${x},${y}" />
+				    <label for="image_mapping-input_title_${index}">Marcador</label>
+				</td>
+				<td class="acf-input">
+			    	<input class="image_mapping-input_title" id="image_mapping-input_title_${index}" type="text" name="${field_name}[${index}][title]" value="" required="required" /> 
+			    </td>
+			    <td class="acf-input">
+			    	<a href="#" class="acf-icon -minus image_mapping-remove-row"></a>
+			   	</td>
+			</tr>
+			`;
+
+			$fieldInputs.append($fieldInput);
+		}
+
+		handleRemoveRow = function() {
+			$parent = $(this).parents('tr.acf-field');
+			index = $parent.index();
+			console.log(index);
+
+			$('.image_mapping-image span:eq('+index+')').remove();
+
+			$parent.remove();
 		},
 
 		setLinkedImg = function() {

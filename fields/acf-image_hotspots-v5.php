@@ -158,28 +158,50 @@ class acf_field_image_mapping extends acf_field {
 
 		$img_label     = esc_attr( $field['image_field_label'] );
 		$field_name    = esc_attr( $field['name'] );
-		$field_value   = esc_attr( $field['value'] );
+		$field_values  = $field['value'];
+
 		$percent_based = array_key_exists( 'percent_based', $field ) && $field['percent_based'] ? 1 : 0;
-		$xy_pair       = explode( ',', $field_value );
-		if ( 1 < count( $xy_pair ) ) {
-			$x = $xy_pair[0];
-			$y = $xy_pair[1];
-		} else {
-			$x = 0;
-			$y = 0;
+
+		$markers = $inputs = '';
+		if (is_array($field_values)) {
+			sort($field_values);
+			
+			foreach ($field_values as $i => $field_value) {
+				$coords = explode(',', $field_value['coords']);
+				$coords = 'left:'.$coords[0].';top:'.$coords[1];
+
+				$markers .= '<span style="'.$coords.'"></span>';
+				$inputs .= '
+				<tr class="acf-field">
+					<td class="acf-label image_mapping-input">
+					    <input class="image_mapping-input_coords" type="hidden" name="'.$field_name.'['.$i.'][coords]" value="'.$field_value['coords'].'" />
+					    <label for="image_mapping-input_title_'.$i.'">Marcador</label>
+					</td>
+					<td class="acf-input">
+					    <input class="image_mapping-input_title" id="image_mapping-input_title_'.$i.'" type="text" name="'.$field_name.'['.$i.'][title]" value="'.$field_value['title'].'" required="required" /> 
+					</td>
+					<td class="acf-input">
+						<a href="#" class="acf-icon -minus image_mapping-remove-row"></a>
+					</td>
+				</tr>
+				';
+			}
 		}
+		
 		echo <<< HTML
 
 			<!-- Image where we will catch the user's clicks -->
-			<div class="$this->name-image">
+			<div class="$this->name-image" id="$field_name">
 				<img src="" data-percent-based="$percent_based" data-label="$img_label" />
-				<span style="left:$x;top:$y;"></span>
+				$markers
 			</div>
 
-			<!-- XY Coordinate Pair -->
-			<input class="$this->name-input" type="text" name="$field_name" value="$field_value" />
-
-HTML;
+			<!-- XY Coordinate Pairs -->
+			<div>Haga click en el mapa para agregar un marcador</div>
+			<table class="$this->name-inputs acf-table -clear" data-field-name="$field_name">
+				$inputs	
+			</table>
+		HTML;
 
 	}
 	
