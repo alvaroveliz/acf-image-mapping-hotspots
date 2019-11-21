@@ -188,20 +188,19 @@ class acf_field_image_mapping extends acf_field {
 			}
 		}
 		
-		echo <<< HTML
-
-			<!-- Image where we will catch the user's clicks -->
-			<div class="$this->name-image" id="$field_name">
-				<img src="" data-percent-based="$percent_based" data-label="$img_label" />
-				$markers
+		echo '
+			<!-- Image where we will catch the user\'s clicks -->
+			<div class="'.$this->name.'-image" id="'.$field_name.'">
+				<img src="" data-percent-based="'.$percent_based.'" data-label="'.$img_label.'" />
+				'.$markers.'
 			</div>
 
 			<!-- XY Coordinate Pairs -->
 			<div>Haga click en el mapa para agregar un marcador</div>
-			<table class="$this->name-inputs acf-table -clear" data-field-name="$field_name">
+			<table class="'.$this->name.'-inputs acf-table -clear" data-field-name="'.$field_name.'">
 				$inputs	
 			</table>
-		HTML;
+		';
 
 	}
 	
