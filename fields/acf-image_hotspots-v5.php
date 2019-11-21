@@ -198,7 +198,7 @@ class acf_field_image_mapping extends acf_field {
 			<!-- XY Coordinate Pairs -->
 			<div>Haga click en el mapa para agregar un marcador</div>
 			<table class="'.$this->name.'-inputs acf-table -clear" data-field-name="'.$field_name.'">
-				$inputs	
+				'.$inputs.'
 			</table>
 		';
 
