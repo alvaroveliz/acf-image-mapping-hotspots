@@ -1,15 +1,16 @@
 # Advanced Custom Fields: Advanced Custom Fields: Image Hotspots Field
-Contributors: rockwell15 eridesign alvaroveliz
-Tags: acf random string field
-Requires at least: 5.2.1
-Tested up to: 5.2.1
-Stable tag: 0.2
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+
+Contributors: rockwell15 eridesign alvaroveliz   
+Tags: acf random string field  
+Requires at least: 5.2.1  
+Tested up to: 5.2.1  
+Stable tag: 0.2  
+License: GPLv2 or later  
+License URI: http://www.gnu.org/licenses/gpl-2.0.html  
 
 ## Description
 
-How to Use:
+**How to Use**:
 
 * Install plugin
 * Create a custom field of this type & link it to an image field
@@ -17,7 +18,7 @@ How to Use:
 * The image will then load in the image mapping field, click to capture the coordinates, relative to the image
 * Coordinates are stored as comma separated strings
 
-TODO:
+**TODO**:
 
 * Square mapping
 * Polygon mapping
